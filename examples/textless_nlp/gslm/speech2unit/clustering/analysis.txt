@@ -1,0 +1,40 @@
+
+ipython
+from analysis import QuantizedUtterances
+
+qu = QuantizedUtterances('/disk/nfs/ostrom/s2324992/data/LJSpeech-1.1/manifests/ljspeech_quantised_km100.txt', textgrids_dir='/disk/nfs/ostrom/s2324992/data/LJSpeech-1.1/audio_data/LJSpeech-1.1/aligned')
+qu.print_purity_stats()
+  Phone    Unit    PNMI    Phone dur.    Unit dur.  # units, phones
+-------  ------  ------  ------------  -----------  -----------------
+ 0.5073  0.3209  0.5469        4.8154       1.8998  (100, 84)
+
+Yoruba
+Km_100....
+
+qu_yor = QuantizedUtterances('/disk/nfs/ostrom/s2324992/data/yoruba/manifests/yor_quantised100.txt', textgrids_dir='/disk/nfs/ostrom/s2324992/data/yoruba/final_align/TextGrid')
+
+
+qu_50.print_purity_stats()
+  Phone    Unit    PNMI    Phone dur.    Unit dur.  # units, phones
+-------  ------  ------  ------------  -----------  -----------------
+ 0.3139  0.5237  0.2550        4.6230       4.1529  (50, 72)
+
+qu_yor.print_purity_stats()
+  Phone    Unit    PNMI    Phone dur.    Unit dur.  # units, phones
+-------  ------  ------  ------------  -----------  -----------------
+ 0.3481  0.4424  0.3076        4.6230       3.2572  (100, 72)
+
+qu_200.print_purity_stats()
+  Phone    Unit    PNMI    Phone dur.    Unit dur.  # units, phones
+-------  ------  ------  ------------  -----------  -----------------
+ 0.3901  0.3968  0.3602        4.6230       2.5641  (200, 72)
+
+qu_500.print_purity_stats()
+  Phone    Unit    PNMI    Phone dur.    Unit dur.  # units, phones
+-------  ------  ------  ------------  -----------  -----------------
+ 0.4687  0.2392  0.4780        4.6230       1.8838  (500, 72)
+
+qu_1_500.print_purity_stats()
+  Phone    Unit    PNMI    Phone dur.    Unit dur.  # units, phones
+-------  ------  ------  ------------  -----------  -----------------
+ 0.4858  0.2197  0.4945        4.6230       1.9271  (500, 72)

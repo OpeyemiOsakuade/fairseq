@@ -1,0 +1,36 @@
+#!/bin/bash
+#SBATCH --gres=gpu:1
+#SBATCH -t 7-00:00:00
+
+cd /home/s2324992/new_clone/fairseq
+pwd
+
+#tts
+
+MODEL=train_tts_4
+SAVE_DIR=/home/s2324992/facebook/fairseq/examples/speech_synthesis/checkpoints/$MODEL
+SPLIT=test
+FEATURE_MANIFEST_ROOT=/home/s2324992/data/LJSpeech-1.1/feature_manifest
+#CHECKPOINT_NAME=avg_last_5
+CHECKPOINT_NAME=best
+CHECKPOINT_PATH=${SAVE_DIR}/checkpoint_${CHECKPOINT_NAME}.pt
+OUT_DIR=inference_griffin/$MODEL/{$CHECKPOINT_NAME}_train_tts_4
+#python scripts/average_checkpoints.py --inputs ${SAVE_DIR} \
+#  --num-epoch-checkpoints 5 \
+#  --output ${CHECKPOINT_PATH}
+
+#python -m examples.speech_synthesis.generate_waveform ${FEATURE_MANIFEST_ROOT} \
+#  --config-yaml config.yaml --gen-subset ${SPLIT} --task text_to_speech \
+#  --path ${CHECKPOINT_PATH} --max-tokens 50000 --spec-bwd-max-iter 32 \
+#  --dump-waveforms
+
+python -m examples.speech_synthesis.generate_waveform ${FEATURE_MANIFEST_ROOT} \
+  --config-yaml config.yaml --gen-subset ${SPLIT} --task text_to_speech \
+  --path ${CHECKPOINT_PATH} --max-tokens 50000 --spec-bwd-max-iter 32 \
+  --results-path $OUT_DIR \
+  --vocoder hifigan \
+  --batch-size 32 \
+  --dump-waveforms \
+  #--txt-file /home/s2324992/facebook/test/fairseq/examples/speech_audio_corrector/test_utt1.txt 
+  
+

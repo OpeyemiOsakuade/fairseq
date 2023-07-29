@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/s2324992/miniconda3/envs/fairseq/bin/fairseq-train", line 4, in <module>
+    cd /home/s2324992/new_clone/fairseq
+NameError: name 'cd' is not defined

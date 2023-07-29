@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "/home/s2324992/miniconda3/envs/fairseq/bin/fairseq-train", line 5, in <module>
+    from fairseq_cli.train import cli_main
+  File "/disk/nfs/ostrom/s2324992/fairseq/fairseq_cli/train.py", line 28, in <module>
+    from fairseq import (
+  File "/disk/nfs/ostrom/s2324992/fairseq/fairseq/__init__.py", line 32, in <module>
+    import fairseq.criterions  # noqa
+  File "/disk/nfs/ostrom/s2324992/fairseq/fairseq/criterions/__init__.py", line 36, in <module>
+    importlib.import_module("fairseq.criterions." + file_name)
+  File "/home/s2324992/miniconda3/envs/fairseq/lib/python3.8/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "/disk/nfs/ostrom/s2324992/fairseq/fairseq/criterions/ctc.py", line 19, in <module>
+    from fairseq.tasks import FairseqTask
+  File "/disk/nfs/ostrom/s2324992/fairseq/fairseq/tasks/__init__.py", line 136, in <module>
+    import_tasks(tasks_dir, "fairseq.tasks")
+  File "/disk/nfs/ostrom/s2324992/fairseq/fairseq/tasks/__init__.py", line 117, in import_tasks
+    importlib.import_module(namespace + "." + task_name)
+  File "/home/s2324992/miniconda3/envs/fairseq/lib/python3.8/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "/disk/nfs/ostrom/s2324992/fairseq/fairseq/tasks/speech_audio_corrector.py", line 14, in <module>
+    from fairseq.data.audio.speech_audio_corrector_dataset import SpeechAudioCorrectorDatasetCreator, get_num_clusters
+  File "/disk/nfs/ostrom/s2324992/fairseq/fairseq/data/audio/speech_audio_corrector_dataset.py", line 27, in <module>
+    from fairseq.data.audio.speech_audio_corrector_utils import (
+  File "/disk/nfs/ostrom/s2324992/fairseq/fairseq/data/audio/speech_audio_corrector_utils.py", line 401
+    print(f"masked token dicts:"{token_dicts},token_dicts)
+                                ^
+SyntaxError: invalid syntax

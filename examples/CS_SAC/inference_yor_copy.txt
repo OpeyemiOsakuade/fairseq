@@ -1,0 +1,38 @@
+#!/bin/bash
+#SBATCH --gres=gpu:1
+#SBATCH -t 7-00:00:00
+
+
+
+cd ~/fairseq
+pwd
+#Edit path to quantized speech codes in fairseq/fairseq/tasks/speech_audio_corrector.py,ln68
+#Before inference,LJSpeec/yor, check /fairseq/fairseq/data/audio/speech_audio_corrector_dataset.py
+#to be sure it is the correct word2speechreps&alignment&corpus
+
+MODEL=train_yor_24000_4
+VOCODER=wav_22050hz_hifigan
+SAVE_DIR=examples/CS_SAC/checkpoints/$MODEL
+SPLIT=test
+FEATURE_MANIFEST_ROOT=/home/s2324992/data/yoruba/feature_manifest
+CHECKPOINT_NAME=best
+CHECKPOINT_PATH=/home/s2324992/fairseq/examples/CS_SAC/checkpoints/$MODEL/checkpoint_${CHECKPOINT_NAME}.pt
+OUT_DIR=examples/CS_SAC/inference_hifigan/$MODEL/$CHECKPOINT_NAME/1030
+
+# optionally form an averaged checkpoint
+#python scripts/average_checkpoints.py --inputs ${SAVE_DIR} \
+#  --num-epoch-checkpoints 5 \
+#  --output ${CHECKPOINT_PATH}
+
+# generate entire test set (using random masking just like training)
+#SPLIT=test
+python -m examples.speech_audio_corrector.generate_waveform_sac ${FEATURE_MANIFEST_ROOT} \
+  --config-yaml config.yaml --gen-subset ${SPLIT} --task speech_audio_corrector \
+  --path ${CHECKPOINT_PATH} --max-tokens 50000 --spec-bwd-max-iter 32 \
+  --results-path $OUT_DIR \
+  --vocoder hifigan \
+  --dump-waveforms
+#mkdir $OUT_DIR/$VOCODER/LJ_TEST_SET
+#mv $OUT_DIR/$VOCODER/*.wav $OUT_DIR/$VOCODER/LJ_TEST_SET
+
+
