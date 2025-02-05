@@ -17,6 +17,7 @@ def hydra_init(cfg_name="config") -> None:
 
     cs = ConfigStore.instance()
     cs.store(name=f"{cfg_name}", node=FairseqConfig)
+    # cs.store(name=f"{cfg_name}_schema", node=FairseqConfig)
 
     for k in FairseqConfig.__dataclass_fields__:
         v = FairseqConfig.__dataclass_fields__[k].default

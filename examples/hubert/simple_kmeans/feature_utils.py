@@ -56,11 +56,27 @@ def dump_feature(reader, generator, num, split, nshard, rank, feat_dir):
         os.remove(feat_path)
 
     feat_f = NpyAppendArray(feat_path)
+    skipped_files = []  # Keep track of skipped files
     with open(leng_path, "w") as leng_f:
         for path, nsample in tqdm.tqdm(iterator, total=num):
-            feat = reader.get_feats(path, nsample)
-            feat_f.append(feat.cpu().numpy())
-            leng_f.write(f"{len(feat)}\n")
+            try:
+                feat = reader.get_feats(path, nsample)
+                if feat is None:
+                    logger.warning(f"Skipping file {path} due to invalid features.")
+                    skipped_files.append(path)
+                    continue
+                feat_f.append(feat.cpu().numpy())
+                leng_f.write(f"{len(feat)}\n")
+            except Exception as e:
+                logger.error(f"Error processing file {path}: {e}")
+                skipped_files.append(path)
+                continue
+    logger.info(f"Finished processing. Skipped {len(skipped_files)} files.")
+    if skipped_files:
+        skipped_log_path = f"{feat_dir}/{split}_{rank}_{nshard}_skipped.log"
+        with open(skipped_log_path, "w") as skipped_log:
+            skipped_log.write("\n".join(skipped_files))
+        logger.info(f"Skipped file list saved to {skipped_log_path}")
     logger.info("finished successfully")
 
 

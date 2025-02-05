@@ -14,6 +14,7 @@ import torchaudio
 from feature_utils import get_path_iterator, dump_feature
 from fairseq.data.audio.audio_utils import get_features_or_waveform
 
+
 logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
@@ -27,23 +28,47 @@ class MfccFeatureReader(object):
     def __init__(self, sample_rate):
         self.sample_rate = sample_rate
 
+    # def read_audio(self, path, ref_len=None):
+    #     wav = get_features_or_waveform(path, need_waveform=True, use_sample_rate=self.sample_rate)
+    #     if ref_len is not None and abs(ref_len - len(wav)) > 160:
+    #         logging.warning(f"ref {ref_len} != read {len(wav)} ({path})")
+    #     return wav
+    
     def read_audio(self, path, ref_len=None):
         wav = get_features_or_waveform(path, need_waveform=True, use_sample_rate=self.sample_rate)
+        if wav is None or len(wav) == 0:
+            logger.error(f"Failed to load audio or empty waveform: {path}")
+            return None
         if ref_len is not None and abs(ref_len - len(wav)) > 160:
-            logging.warning(f"ref {ref_len} != read {len(wav)} ({path})")
+            logger.warning(f"ref {ref_len} != read {len(wav)} ({path})")
+        logger.info(f"Loaded waveform from {path} with length: {len(wav)}")
         return wav
+
 
     def get_feats(self, path, ref_len=None):
         x = self.read_audio(path, ref_len=ref_len)
+        if x is None or len(x) == 0:
+            logger.warning(f"Skipping empty or invalid audio file: {path}")
+            return None  # Or handle as appropriate
+    
         with torch.no_grad():
             x = torch.from_numpy(x).float()
             x = x.view(1, -1)
+            try:
+                mfccs = torchaudio.compliance.kaldi.mfcc(
+                    waveform=x,
+                    sample_frequency=self.sample_rate,
+                    use_energy=False,
+                )
+            except Exception as e:
+                logger.error(f"Failed to compute MFCC for {path}: {e}")
+                return None
 
-            mfccs = torchaudio.compliance.kaldi.mfcc(
-                waveform=x,
-                sample_frequency=self.sample_rate,
-                use_energy=False,
-            )  # (time, freq)
+            # mfccs = torchaudio.compliance.kaldi.mfcc(
+            #     waveform=x,
+            #     sample_frequency=self.sample_rate,
+            #     use_energy=False,
+            # )  # (time, freq)
             mfccs = mfccs.transpose(0, 1)  # (freq, time)
             deltas = torchaudio.functional.compute_deltas(mfccs)
             ddeltas = torchaudio.functional.compute_deltas(deltas)

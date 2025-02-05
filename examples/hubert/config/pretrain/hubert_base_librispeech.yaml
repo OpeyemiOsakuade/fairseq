@@ -25,8 +25,8 @@ task:
   _name: hubert_pretraining
   data: ???
   label_dir: ???
-  labels: ???
-  label_rate: ${model.label_rate}
+  labels: '["km"]'
+  label_rate: 100
   sample_rate: 16000
   max_sample_size: 250000
   min_sample_size: 32000
@@ -64,7 +64,7 @@ lr_scheduler:
 
 model:
   _name: hubert
-  label_rate: ???
+  label_rate: 100
   skip_masked: false
   skip_nomask: false
   mask_prob: 0.80
@@ -91,7 +91,7 @@ hydra:
           - task.data
           - task.label_dir
   run:
-    dir: ???
+    dir: /disk/ostrom/homedirs/s2324992/tonal_data/data/mandarin/WenetSpeech/DATA_UNTAR_DIRECTORY/audio_wav/checkpoint
   sweep:
-    dir: ???
+    dir: /disk/ostrom/homedirs/s2324992/tonal_data/data/mandarin/WenetSpeech/DATA_UNTAR_DIRECTORY/audio_wav/checkpoint
     subdir: ${hydra.job.config_name}__${hydra.job.override_dirname}

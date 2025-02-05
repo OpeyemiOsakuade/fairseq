@@ -1,0 +1,45 @@
+
+2023-11-28 05:03:57 | INFO | fairseq.tasks.text_to_speech | Please install tensorboardX: pip install tensorboardX
+2023-11-28 05:04:11 | INFO | fairseq.tasks.text_to_speech | Please install tensorboardX: pip install tensorboardX
+2023-11-28 05:04:11 | INFO | fairseq.tasks.text_to_speech | Please install tensorboardX: pip install tensorboardX
+2023-11-28 05:04:11 | INFO | fairseq.tasks.text_to_speech | Please install tensorboardX: pip install tensorboardX
+2023-11-28 05:04:13 | INFO | fairseq.distributed.utils | distributed init (rank 1): tcp://localhost:16799
+2023-11-28 05:04:13 | INFO | fairseq.distributed.utils | distributed init (rank 0): tcp://localhost:16799
+2023-11-28 05:04:13 | INFO | fairseq.distributed.utils | distributed init (rank 2): tcp://localhost:16799
+/home/s2324992/miniconda3/envs/test_fairseq/lib/python3.8/site-packages/torch/cuda/__init__.py:138: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11070). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+/home/s2324992/miniconda3/envs/test_fairseq/lib/python3.8/site-packages/torch/cuda/__init__.py:138: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11070). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+/home/s2324992/miniconda3/envs/test_fairseq/lib/python3.8/site-packages/torch/cuda/__init__.py:138: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11070). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+Traceback (most recent call last):
+  File "/home/s2324992/miniconda3/envs/test_fairseq/bin/fairseq-train", line 8, in <module>
+    sys.exit(cli_main())
+  File "/home/s2324992/miniconda3/envs/test_fairseq/lib/python3.8/site-packages/fairseq_cli/train.py", line 557, in cli_main
+    distributed_utils.call_main(cfg, main)
+  File "/home/s2324992/miniconda3/envs/test_fairseq/lib/python3.8/site-packages/fairseq/distributed/utils.py", line 344, in call_main
+    torch.multiprocessing.spawn(
+  File "/home/s2324992/miniconda3/envs/test_fairseq/lib/python3.8/site-packages/torch/multiprocessing/spawn.py", line 246, in spawn
+    return start_processes(fn, args, nprocs, join, daemon, start_method="spawn")
+  File "/home/s2324992/miniconda3/envs/test_fairseq/lib/python3.8/site-packages/torch/multiprocessing/spawn.py", line 202, in start_processes
+    while not context.join():
+  File "/home/s2324992/miniconda3/envs/test_fairseq/lib/python3.8/site-packages/torch/multiprocessing/spawn.py", line 163, in join
+    raise ProcessRaisedException(msg, error_index, failed_process.pid)
+torch.multiprocessing.spawn.ProcessRaisedException: 
+
+-- Process 2 terminated with the following error:
+Traceback (most recent call last):
+  File "/home/s2324992/miniconda3/envs/test_fairseq/lib/python3.8/site-packages/torch/multiprocessing/spawn.py", line 74, in _wrap
+    fn(i, *args)
+  File "/home/s2324992/miniconda3/envs/test_fairseq/lib/python3.8/site-packages/fairseq/distributed/utils.py", line 322, in distributed_main
+    cfg.distributed_training.distributed_rank = distributed_init(cfg)
+  File "/home/s2324992/miniconda3/envs/test_fairseq/lib/python3.8/site-packages/fairseq/distributed/utils.py", line 257, in distributed_init
+    dist.init_process_group(
+  File "/home/s2324992/miniconda3/envs/test_fairseq/lib/python3.8/site-packages/torch/distributed/c10d_logger.py", line 74, in wrapper
+    func_return = func(*args, **kwargs)
+  File "/home/s2324992/miniconda3/envs/test_fairseq/lib/python3.8/site-packages/torch/distributed/distributed_c10d.py", line 1148, in init_process_group
+    default_pg, _ = _new_process_group_helper(
+  File "/home/s2324992/miniconda3/envs/test_fairseq/lib/python3.8/site-packages/torch/distributed/distributed_c10d.py", line 1279, in _new_process_group_helper
+    backend_class = ProcessGroupNCCL(backend_prefix_store, group_rank, group_size, pg_options)
+RuntimeError: ProcessGroupNCCL is only supported with GPUs, no GPUs found!
+

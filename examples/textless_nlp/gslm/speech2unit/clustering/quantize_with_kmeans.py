@@ -102,7 +102,7 @@ def main(args, logger):
             manifest_path=args.manifest_path,
             sample_pct=1.0,
             flatten=False,
-            channel_id=int(args.channel_id) if args.channel_id else None,
+            # channel_id=int(args.channel_id) if args.channel_id else None,
         )
         logger.info(
             f"Features extracted for {len(features_batch)} utterances.\n"

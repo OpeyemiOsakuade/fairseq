@@ -1,0 +1,27 @@
+import pickle
+import json
+import numpy as np
+
+# Load the data
+with open('/disk/ostrom/homedirs/s2324992/tonal_data/tone_quantization/spiral_mandarin/vowels_deprecated.pkl', 'rb') as f:
+    data = pickle.load(f)
+
+# Convert to JSON-serializable data if necessary
+# For example, if data contains NumPy arrays, convert them to lists
+def convert_to_serializable(obj):
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif isinstance(obj, dict):
+        return {key: convert_to_serializable(value) for key, value in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_to_serializable(element) for element in obj]
+    else:
+        return obj
+
+serializable_data = convert_to_serializable(data)
+
+# Save to JSON
+with open('/disk/ostrom/homedirs/s2324992/tonal_data/tone_quantization/spiral_mandarin/vowels_deprecated.json', 'w') as f:
+    json.dump(serializable_data, f, indent=4)
+
+print("Data has been saved to JSON for editing.")
