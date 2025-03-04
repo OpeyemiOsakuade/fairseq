@@ -91,7 +91,7 @@ hydra:
           - task.data
           - task.label_dir
   run:
-    dir: /disk/ostrom/homedirs/s2324992/tonal_data/data/mandarin/WenetSpeech/DATA_UNTAR_DIRECTORY/filtered_audio/checkpoint
+    dir: /mnt/ceph_rbd/WenetSpeech/960_subset/WB/checkpoint
   sweep:
-    dir: /disk/ostrom/homedirs/s2324992/tonal_data/data/mandarin/WenetSpeech/DATA_UNTAR_DIRECTORY/filtered_audio/checkpoint
+    dir: /mnt/ceph_rbd/WenetSpeech/960_subset/WB/checkpoint
     subdir: ${hydra.job.config_name}__${hydra.job.override_dirname}
